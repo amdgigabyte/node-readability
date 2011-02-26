@@ -70,7 +70,12 @@ var server = http.createServer(function (req, res) {
 	//}
 	
 	var searchUrl = url.parse(req.url, true);
-	checkUrl = url.parse(searchUrl.query.url);
+	if (searchUrl.query && searchUrl.query.url) {
+		var checkUrl = url.parse(searchUrl.query.url);
+	} else {
+		checkUrl = {};//赋值空对像
+	}
+	
 	//console.log(checkUrl);
 	if (checkUrl.protocol && checkUrl.host && checkUrl.protocol=='http:' && checkUrl.host) {
 		Curler.start(searchUrl.query.url, res);
